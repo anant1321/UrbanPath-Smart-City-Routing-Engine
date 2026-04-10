@@ -1,0 +1,30 @@
+# ── Node.js / Backend ──────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json          # optional: some teams commit this
+
+# ── Environment / Secrets ──────────────────────────
+.env
+.env.*
+!.env.example              # keep a safe example template
+
+# ── C++ Build Artifacts ────────────────────────────
+*.exe
+*.o
+*.out
+*.a
+*.so
+*.dll
+
+# ── OS & Editor Junk ───────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# ── Logs ───────────────────────────────────────────
+*.log
+logs/
