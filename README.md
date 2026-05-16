@@ -199,6 +199,5 @@ git push origin main      # Vercel auto-deploys on every push
 - [ ] Bidirectional A\* for even faster convergence
 - [ ] Expand to 100+ node graph (full PMC area)
 - [ ] Multi-stop routing (TSP approximation)
-- [ ] Public API for third-party smart city integrations
 
-*Built with Love by Anant, Raghav Vyavahare, Soham Kulkarni & Bala Jee — MIT World Peace University, Pune
+*Built with Love by Anant, Raghav Vyavahare, Soham Kulkarni & Bala Jee — MIT World Peace University, Pune*
