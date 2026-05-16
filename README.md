@@ -6,7 +6,6 @@
 ![Backend](https://img.shields.io/badge/Backend-Node.js%20%7C%20Express-39ff14?style=flat-square)
 ![Engine](https://img.shields.io/badge/Engine-C%2B%2B17-bf5af2?style=flat-square)
 ![DB](https://img.shields.io/badge/Database-Supabase%20%7C%20PostgreSQL-ffb703?style=flat-square)
-![Deploy](https://img.shields.io/badge/Deployed-Vercel-white?style=flat-square)
 
 ---
 
