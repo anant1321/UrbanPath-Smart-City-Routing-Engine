@@ -7,19 +7,6 @@
 ![Engine](https://img.shields.io/badge/Engine-C%2B%2B17-bf5af2?style=flat-square)
 ![DB](https://img.shields.io/badge/Database-Supabase%20%7C%20PostgreSQL-ffb703?style=flat-square)
 
----
-
-## 👥 Team
-
-| Name | Role |
-|------|------|
-| **Anant Kulkarni** | Full-Stack Lead, Algorithm Engine |
-| **Raghav Vyavahare** | Graph Modeling & Data Layer |
-| **Soham Kulkarni** | Frontend UI & Visualization |
-| **Bala Jee** | Backend API & Database Integration |
-
----
-
 ## 💡 Motivation
 
 Living in a fast-growing city like Pune, we kept wondering how smarter algorithms could make navigation more efficient at scale — for autonomous logistics, emergency response, and smart traffic systems. That question became UrbanPath.
