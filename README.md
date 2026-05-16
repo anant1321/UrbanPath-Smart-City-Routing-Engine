@@ -13,7 +13,7 @@
 
 | Name | Role |
 |------|------|
-| **Anant** | Full-Stack Lead, Algorithm Engine, Deployment |
+| **Anant Kulkarni** | Full-Stack Lead, Algorithm Engine |
 | **Raghav Vyavahare** | Graph Modeling & Data Layer |
 | **Soham Kulkarni** | Frontend UI & Visualization |
 | **Bala Jee** | Backend API & Database Integration |
