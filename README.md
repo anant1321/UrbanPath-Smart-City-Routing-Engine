@@ -1,11 +1,72 @@
 # 🏙️ UrbanPath — Pune Smart City Routing System
 
-> Real-time pathfinding visualizer comparing **Dijkstra** vs **A\*** on a live **Pune city graph** — with a full responsive cyber dashboard for Android and laptop.
+> A real-time pathfinding visualization engine comparing **Dijkstra** vs **A\*** on Pune's actual road network — built as a full-stack smart city project by a team of four.
 
-![Stack](https://img.shields.io/badge/Frontend-HTML%20%7C%20Leaflet.js%20%7C%20TailwindCSS-00f5ff?style=flat-square)
+![Stack](https://img.shields.io/badge/Frontend-HTML%20%7C%20Leaflet.js%20%7C%20Tailwind-00f5ff?style=flat-square)
 ![Backend](https://img.shields.io/badge/Backend-Node.js%20%7C%20Express-39ff14?style=flat-square)
 ![Engine](https://img.shields.io/badge/Engine-C%2B%2B17-bf5af2?style=flat-square)
 ![DB](https://img.shields.io/badge/Database-Supabase%20%7C%20PostgreSQL-ffb703?style=flat-square)
+![Deploy](https://img.shields.io/badge/Deployed-Vercel-white?style=flat-square)
+
+---
+
+## 👥 Team
+
+| Name | Role |
+|------|------|
+| **Anant** | Full-Stack Lead, Algorithm Engine, Deployment |
+| **Raghav Vyavahare** | Graph Modeling & Data Layer |
+| **Soham Kulkarni** | Frontend UI & Visualization |
+| **Bala Jee** | Backend API & Database Integration |
+
+---
+
+## 💡 Motivation
+
+Living in a fast-growing city like Pune, we kept wondering how smarter algorithms could make navigation more efficient at scale — for autonomous logistics, emergency response, and smart traffic systems. That question became UrbanPath.
+
+---
+
+## 🗺️ What It Does
+
+UrbanPath maps **35 key Pune city nodes** and **145 weighted road segments** onto an interactive Leaflet.js dashboard, then runs **Dijkstra's Algorithm** and **A\* Search** side-by-side on any chosen route — animating every node explored so you can literally watch the heuristic prune the search space in real time.
+
+### Key Results
+
+In one benchmark test (Shivajinagar → Katraj):
+
+| Metric | Dijkstra | A★ |
+|--------|----------|----|
+| Nodes explored | 19 | 5 |
+| Path cost | 6.4 km | 6.4 km |
+| Latency | higher | lower |
+
+**Same optimal path. 74% fewer node expansions.** That's the heuristic advantage — `f(n) = g(n) + h(n)` — made visible.
+
+---
+
+## ✨ Features
+
+- 🗺️ **Interactive map** — click nodes directly on Leaflet.js + OpenStreetMap to set source and target
+- ⚡ **Real-time comparison** — Dijkstra and A\* run simultaneously with animated node exploration
+- 📊 **Live metrics** — nodes visited, path cost (km), latency (ms), efficiency gain %
+- 🟣 **Visual search space** — purple sweep shows explored nodes; cyan/green lines show final paths
+- 🗄️ **Route history** — every run persisted to Supabase PostgreSQL
+- 📱 **Responsive** — full cyber dashboard for desktop and Android (bottom-sheet navigation)
+- 🔌 **Offline demo** — built-in Pune graph runs client-side with zero backend
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | HTML5, Tailwind CSS, JavaScript, Leaflet.js |
+| Backend | Node.js, Express.js |
+| Algorithm Engine | C++ STL (MinHeap PQ, O((V+E) log V)) |
+| Database | Supabase / PostgreSQL |
+| Deployment | Vercel (serverless) + GitHub CI/CD |
+| Algorithms | Dijkstra's Algorithm, A\* Search (Euclidean heuristic) |
 
 ---
 
@@ -13,149 +74,89 @@
 
 ```
 urbanpath/
-├── frontend/
-│   └── index.html           ← Responsive cyber dashboard (Leaflet + Tailwind)
-├── backend/
-│   ├── server.js             ← Node.js API gateway (Express)
-│   ├── package.json
-│   └── .env.example
+├── public/
+│   └── index.html              ← Cyber dashboard (Leaflet + Tailwind)
+├── api/
+│   ├── _supabase.js            ← Shared Supabase client + CORS
+│   ├── _pathfinder.js          ← Dijkstra + A* (Node.js, Vercel-ready)
+│   ├── maps.js                 ← GET  /api/maps
+│   ├── maps/[mapId]/graph.js   ← GET  /api/maps/:id/graph
+│   ├── route.js                ← POST /api/route
+│   ├── history.js              ← GET  /api/history
+│   └── health.js               ← GET  /api/health
 ├── cpp/
-│   ├── pathfinder.cpp        ← C++ Dijkstra + A* engine
+│   ├── pathfinder.cpp          ← C++ engine (local/server use)
 │   └── Makefile
 ├── database/
-│   └── schema.sql            ← Supabase schema + Pune city seed data
+│   └── schema.sql              ← Supabase schema + Pune city seed
+├── vercel.json
+├── package.json
+├── DEPLOY.md                   ← Step-by-step Vercel deployment guide
 └── README.md
 ```
 
 ---
 
-## 🗺️ Pune City Graph
-
-The built-in city graph includes **15 real Pune landmarks** and **25 road edges**:
-
-| # | Node | Area |
-|---|------|------|
-| 1 | Shivajinagar Hub | Central Pune |
-| 2 | Deccan Gymkhana | West Pune |
-| 3 | Koregaon Park | East Pune |
-| 4 | Kothrud Gate | West Pune |
-| 5 | Baner Junction | NW Pune |
-| 6 | FC Road Node | Central |
-| 7 | Swargate Terminal | South Pune |
-| 8 | Viman Nagar | NE Pune |
-| 9 | Wakad Connector | Far NW |
-| 10 | Hadapsar Grid | SE Pune |
-| 11 | Katraj Terminus | South end |
-| 12 | Hinjewadi Tech Park | Far West |
-| 13 | Camp Cantonment | Central-East |
-| 14 | Khadki Station | North |
-| 15 | MG Road Plaza | Central |
-
----
-
-## 📱 Responsive Layout
-
-### Laptop / Desktop (≥ 769px)
-```
-┌─────────────┬─────────────────────────────┬─────────────┐
-│   COMMAND   │                             │   METRICS   │
-│   PANEL     │        LEAFLET MAP          │   COMPARE   │
-│   (260px)   │       (full center)         │    LOG      │
-│             │                             │   (260px)   │
-└─────────────┴─────────────────────────────┴─────────────┘
-```
-
-### Android / Mobile (≤ 768px)
-```
-┌─────────────────────────────────────┐
-│            HEADER BAR               │
-├─────────────────────────────────────┤
-│                                     │
-│         FULL SCREEN MAP             │
-│      (tap nodes directly)           │
-│                                     │
-├──────────────────────────┬──────────┤
-│  ════ BOTTOM SHEET ════  │  drag ↕  │
-│  CONTROL │ STATS │ LOG   │          │
-└──────────────────────────┴──────────┘
-│  MAP  │  CONTROL  │  STATS  │  LOG  │  ← Bottom nav
-└───────────────────────────────────────┘
-```
-
-The bottom sheet supports **drag gestures**: swipe up to expand, swipe down to collapse. Tap bottom nav buttons to switch panels instantly.
-
----
-
 ## 🚀 Quick Start
 
-### 1. Open Immediately (No Backend)
+### Option 1 — Instant Demo (No Setup)
 ```
-Open frontend/index.html in any browser
-→ Click "◈ DEMO (OFFLINE)" — runs full Pune graph in-browser
+Open public/index.html in any browser
+→ Click ◈ DEMO (OFFLINE) to run Pune pathfinding entirely in-browser
 ```
 
-### 2. Full Stack Setup
+### Option 2 — Full Stack
 
-**Supabase:**
-1. Create project at [supabase.com](https://supabase.com)
-2. SQL Editor → paste `database/schema.sql` → Run
-3. Copy Project URL + anon key
+**1. Supabase**
+```
+supabase.com → New Project → SQL Editor → paste database/schema.sql → Run
+Copy your Project URL and anon key
+```
 
-**Backend:**
+**2. Backend**
 ```bash
-cd backend
-cp .env.example .env      # fill in Supabase credentials
 npm install
-npm start                  # → http://localhost:3000
+# create .env with SUPABASE_URL and SUPABASE_ANON_KEY
+node api/server.js        # or: vercel dev
 ```
 
-**C++ Engine:**
+**3. C++ Engine (optional, local only)**
 ```bash
 cd cpp
-make                       # auto-downloads nlohmann/json, compiles
-# OR manually:
-curl -L https://github.com/nlohmann/json/releases/download/v3.11.3/json.hpp -o json.hpp
-g++ -O2 -std=c++17 -o pathfinder pathfinder.cpp
+make                      # auto-downloads nlohmann/json, compiles
+./pathfinder              # test with JSON on stdin
 ```
 
-**Open Frontend:**
+**4. Deploy to Vercel**
+```bash
+git push origin main      # Vercel auto-deploys on every push
 ```
-http://localhost:3000
-```
-
----
-
-## 🎮 How to Use
-
-### Select Nodes
-- **Tap directly on map** — first tap = Source (green), second tap = Target (red)
-- **Or use dropdowns** — Source / Target selects in Command panel
-
-### Run Algorithms
-1. Select algorithm: **BOTH** | **DIJKSTRA** | **A★**
-2. Adjust animation speed: SLOW → NORMAL → FAST → TURBO
-3. Click **⚡ EXECUTE** (or **⚡ RUN** on mobile)
-
-### Read Results
-- **Purple dots** = nodes visited during exploration
-- **Cyan solid line** = Dijkstra's path
-- **Green dashed line** = A★ path
-- Check **METRICS** tab for node count, latency, cost
-- Check **COMPARE** tab for side-by-side bar charts + analysis
+→ See **[DEPLOY.md](./DEPLOY.md)** for the full step-by-step guide.
 
 ---
 
 ## 🔬 Algorithm Details
 
-### Dijkstra
-- Explores all reachable nodes in order of cost
-- Guaranteed shortest path, O((V+E) log V)
-- "Blind" — no directional bias toward target
+### Dijkstra's Algorithm
+- Uninformed (blind) search — explores all directions equally
+- Guaranteed shortest path: `O((V + E) log V)` with a min-heap priority queue
+- Weakness: examines many nodes that are far from the target
 
-### A★
-- f(n) = g(n) + h(n) where h = Euclidean distance × 111 km/degree
-- Focuses search toward target — prunes unnecessary nodes
-- Same optimal path, significantly fewer expansions on sparse graphs
+### A\* Search
+- Informed search — guided by heuristic `h(n) = Euclidean distance × 111 km/degree`
+- Priority function: `f(n) = g(n) + h(n)` where `g(n)` = actual cost from source
+- Result: same optimal path as Dijkstra, with significantly fewer node expansions
+
+---
+
+## 🗄️ Database Schema
+
+| Table | Description |
+|-------|-------------|
+| `maps` | City map configurations (center, zoom) |
+| `nodes` | Intersections with real lat/lng coordinates |
+| `edges` | Road segments with km weights and road names |
+| `run_history` | Algorithm performance log per session |
 
 ---
 
@@ -165,36 +166,40 @@ http://localhost:3000
 |--------|----------|-------------|
 | GET | `/api/maps` | List all city maps |
 | GET | `/api/maps/:id/graph` | Load nodes + edges |
-| POST | `/api/route` | Run pathfinding |
-| GET | `/api/history` | Recent runs |
-| GET | `/api/health` | Health check |
+| POST | `/api/route` | Run pathfinding algorithms |
+| GET | `/api/history` | Recent routing sessions |
+| GET | `/api/health` | Service health check |
 
-**POST /api/route body:**
+**POST `/api/route` body:**
 ```json
-{ "map_id": "uuid", "source": 1, "target": 11, "algorithm": "both" }
+{
+  "map_id": "uuid",
+  "source": 1,
+  "target": 11,
+  "algorithm": "both"
+}
 ```
 
 ---
 
-## 🖥️ C++ Engine
+## 🗺️ Pune City Graph
 
-Reads JSON from stdin, outputs results to stdout:
-```bash
-echo '{"nodes":[...],"edges":[...],"source":1,"target":11,"algorithm":"both"}' | ./pathfinder
-```
+35 real Pune landmarks connected by 145 weighted road segments, including:
 
-Each result includes: `path[]`, `visited_order[]`, `total_cost`, `nodes_visited`, `latency_ms`
-
----
-
-## 📦 Dependencies
-
-| Layer | Dependencies |
-|-------|-------------|
-| Frontend | Leaflet.js 1.9.4, Tailwind CSS CDN, Orbitron + Share Tech Mono fonts |
-| Backend | express, @supabase/supabase-js, cors, dotenv |
-| C++ | nlohmann/json (auto-downloaded), C++17 STL |
+- Shivajinagar Hub · FC Road · Deccan Gymkhana · Koregaon Park
+- Baner Junction · Hinjewadi Tech Park · Wakad · Khadki Station
+- MG Road · Camp Cantonment · Viman Nagar · Hadapsar
+- Swargate · Katraj Terminus · Kothrud · and more
 
 ---
 
-*UrbanPath v2 — Pune Smart City Routing Engine*
+## 🔮 Roadmap
+
+- [ ] Real-time traffic weight updates
+- [ ] ML-based congestion prediction (XGBoost / LSTM)
+- [ ] Bidirectional A\* for even faster convergence
+- [ ] Expand to 100+ node graph (full PMC area)
+- [ ] Multi-stop routing (TSP approximation)
+- [ ] Public API for third-party smart city integrations
+
+*Built with Love by Anant, Raghav Vyavahare, Soham Kulkarni & Bala Jee — MIT World Peace University, Pune
